@@ -1,4 +1,5 @@
 import React from 'react';
+/*
 import PropTypes from 'prop-types';
 
 function Food({ name, picture, rating }) {
@@ -54,7 +55,6 @@ function App() {
   );
 }
 
-
 // prop-types는 props를 검사. 자료형과 그 이름 값이 전달되었는지 검사
 Food.propTypes = {
   // name: PropTypes.string.isRequired,  // Food 컴포넌트의 name 키값은 문자열(string)이 필요(isRequired)
@@ -62,5 +62,42 @@ Food.propTypes = {
   picture: PropTypes.string.isRequired,
   rating: PropTypes.number,
 };
+
+*/
+
+
+// state는 동적데이터(변경될 가능성이 있는 데이터)를 다룰 때 사용
+class App extends React.Component {
+  state = {
+    count: 0,
+  };
+
+  // state의 값을 변경할 때는 setState를 사용하여 변경. state가 변경되면 자동적으로 render함수 재실행
+  // current 인자에는 현재 state가 넘어옴
+  add = () => {
+    console.log('add');
+    this.setState(current => ({ 
+      count: current.count + 1
+    }));
+  };
+  minus = () => {
+    console.log('minus');
+    this.setState(current => ({ 
+      count: current.count - 1
+    }));
+  };
+
+  // 지금의 App 컴포넌트는 클래스라서(함수가 아니라서) return 문을 사용할 수 없음(=함수형 App 컴포넌트처럼 JSX 반환 불가)  >> JSX를 반환하기 위해 render 함수 사용
+  // 즉, 클래스형 컴포넌트는 return 문 사용 불가여서 render 함수를 사용하여 JSX를 반환하며, state를 사용하기 위해 클래스형 컴포넌트를 
+  render() {
+    return (
+      <div>
+        <h1>The number is: {this.state.count}</h1>
+        <button onClick={this.add}>Add</button>
+        <button onClick={this.minus}>Minus</button>
+      </div>
+    )
+  }
+}
 
 export default App;
