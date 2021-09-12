@@ -68,10 +68,29 @@ Food.propTypes = {
 
 // state는 동적데이터(변경될 가능성이 있는 데이터)를 다룰 때 사용
 class App extends React.Component {
+
+  // Mount로 분류하는 생명주기 함수 3가지(실행순서) : 1.constructor()함수, 2.render()함수, 3.componentDidMount()함수
+  // constructor(props) {
+  //   super(props);
+  //   console.log('hello');
+  // }
+  // componentDidMount() {
+  //   console.log('component rendered');
+  // }
+  // 
+  // componentDidUpdate : 화면이 업데이트되는 경우에 실행되는 함수
+  // componentDidUpdate() {
+  //   console.log('I just Updated');
+  // }
+  // 
+  // componentWillUnmount : 컴포넌트가 화면에서 떠날 때 실행되는 함수. 보통 컴포넌트에 적용한 이벤트리스너를 제거할 때 사용
+  // componentWillUnmount() {
+  //   console.log('Goodbye');
+  // }
+
   state = {
     count: 0,
   };
-
   // state의 값을 변경할 때는 setState를 사용하여 변경. state가 변경되면 자동적으로 render함수 재실행
   // current 인자에는 현재 state가 넘어옴
   add = () => {
@@ -90,6 +109,7 @@ class App extends React.Component {
   // 지금의 App 컴포넌트는 클래스라서(함수가 아니라서) return 문을 사용할 수 없음(=함수형 App 컴포넌트처럼 JSX 반환 불가)  >> JSX를 반환하기 위해 render 함수 사용
   // 즉, 클래스형 컴포넌트는 return 문 사용 불가여서 render 함수를 사용하여 JSX를 반환하며, state를 사용하기 위해 클래스형 컴포넌트를 
   render() {
+    console.log('render');
     return (
       <div>
         <h1>The number is: {this.state.count}</h1>
