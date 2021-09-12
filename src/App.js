@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+import Movie from './Movie';
 
 class App extends React.Component {
+
   state = {
     isLoading: true,
     movies: [],
@@ -9,25 +11,45 @@ class App extends React.Component {
 
   getMovies = async () => {
     // getMovies 함수는 시간이 필요하다는 것을 async로 표시, 실행 시간이 필요한 대상에 await 표시
-    // axios.get() 함수의 인자에 URL을 전달하여 API를 호출
-    const movies = await axios.get("https://yts-proxy.now.sh/list_movies.json");
+    // axios.get() 함수의 인자에 URL을 전달하여 API를 호출하고, 그 데이터를 할당 (구조분해할당)
+    const {
+      data: {
+        data: { movies },
+      }
+    } = await axios.get("https://yts-proxy.now.sh/list_movies.json?soty_by=rating");
+    // this.setState({ movies: movies }); 왼쪽 movies는 state, 오른쪽 movies는 구조분해할당으로 얻은 데이터 변수
+    // 객체 키와 대입 변수 이름이 같으면 축약 가능(movies)
+    this.setState({ movies, isLoading: false });
   }
 
+  // Mount로 분류하는 생명주기 함수 3가지(순서별) : 1.constructor()함수 -> 2.render()함수 -> 3.componentDidMount()함수
   componentDidMount() {
     // 영화 데이터 로딩!
-    // setTimeout() 함수 : 첫 번째 인자로 전달한 함수를 두 번째 인자로 전달한 값(밀리초) 후에 실행하는 함수
-    // setTimeout(() => {
-    //   this.setState({ isLoading: false });
-    // }, 6000);
     this.getMovies();
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, movies } = this.state;
     return (
-      <div>{isLoading ? 'Loading...' : 'We are ready'}</div>
+      <div>
+        {isLoading 
+          ? 'Loading...' 
+          : movies.map((movie) => {
+              return (
+                <Movie 
+                  key={movie.id}
+                  id={movie.id}
+                  year={movie.year}
+                  title={movie.title}
+                  summary={movie.summary}
+                  poster={movie.medium_cover_image}
+                />
+              );
+            })}
+      </div>
     );
   }
+  
 }
 
 export default App;
