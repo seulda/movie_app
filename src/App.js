@@ -29,16 +29,18 @@ class App extends React.Component {
     this.getMovies();
   }
 
+  // class가 아닌 className으로 작성하는 이유 : HTML의 class와 Javascript의 class라는 이름이 겹치면 react가 혼란.
+  // react는 JSX를 HTML로 변환하면서 className을 class로 다시 바꿈
   render() {
     const { isLoading, movies } = this.state;
     return (
-      <section class="container">
+      <section className="container">
         {isLoading ? (
-          <div class="loader">
-            <span class="loader_text">'Loading...' </span>
+          <div className="loader">
+            <span className="loader_text">'Loading...' </span>
           </div>
           ) : (
-            <div class="movies">
+            <div className="movies">
               {
                 movies.map((movie) => {
                   return (
@@ -49,6 +51,7 @@ class App extends React.Component {
                       title={movie.title}
                       summary={movie.summary}
                       poster={movie.medium_cover_image}
+                      genres={movie.genres}
                     />
                   );
                 })
